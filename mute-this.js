@@ -51,7 +51,7 @@ function filtrer() {
   newFilter.action = Gmail.newFilterAction();
   newFilter.action = oldFilter.action;
 
-  newFilter.id = oldFilterId;
+  newFilter.id = oldFilterId; // This doesn't work
   
   let me = Session.getEffectiveUser().getEmail();
           
