@@ -5,8 +5,14 @@ function main() {
   let threads = getThreads(targetLabel);
   if (threads.length == 0) return;
 
+  let queryEnd = '}';
+  for (i in threads) {
+    queryEnd = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + queryEnd;
+  }
+  queryEnd = '{' + queryEnd.slice(1);
   // Check if there is a filter already, using Properties ( Properties.setProperties(properties))
   // if there isn't a filter already, make one
+  
   makeFilter();
 }
 
