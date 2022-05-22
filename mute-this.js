@@ -1,15 +1,15 @@
-const targetLabel = 'FriscoEdits' // Change this to whatever label name you want to use.
+const targetLabel = 'mute-this' // Change this to whatever label name you want to use.
 
 // main is the first function to run and calls the other functions.
 function main() {
   let threads = getThreads(targetLabel);
   if (threads.length == 0) return;
 
-  let queryEnd = '}';
+  let query = '}';
   for (i in threads) {
-    queryEnd = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + queryEnd;
+    query = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + query;
   }
-  queryEnd = '{' + queryEnd.slice(1);
+  query = '{' + query.slice(1);
   // Check if there is a filter already, using Properties ( Properties.setProperties(properties))
   // if there isn't a filter already, make one
   
