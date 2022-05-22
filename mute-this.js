@@ -3,8 +3,7 @@ const targetLabel = 'mute-this' // Change this to whatever label name you want t
 // main is the first function to run and calls the other functions.
 function main() {
   let threads = getThreads(targetLabel);
-  
-  // Check if there are any threads. if not, return.
+  if (threads.length == 0) return;
 
   // Check if there is a filter already, using Properties ( Properties.setProperties(properties))
   // if there isn't a filter already, make one
@@ -22,14 +21,8 @@ function getThreads(targetLabelName){
   let targetLabel = GmailApp.getUserLabelByName(targetLabelName);
   targetLabel =  targetLabel ? targetLabel :GmailApp.createLabel(targetLabelName);
 
-  let targetThreads;
+  let targetThreads = targetLabel.getThreads();
 
-  try {
-    targetThreads = targetLabel.getThreads();
-  }
-  catch(e) {
-    console.log(e);
-  }
   return targetThreads;
 }
 
