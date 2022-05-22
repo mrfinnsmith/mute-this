@@ -1,8 +1,8 @@
-const targetLabel = 'mute-this' // Change this to whatever label name you want to use.
+const targetLabelName = 'mute-this' // Change this to whatever label name you want to use.
 
 // main is the first function to run and calls the other functions.
 function main() {
-  let threads = getThreads(targetLabel);
+  let threads = getThreads(targetLabelName);
   if (threads.length == 0) return;
 
   let query = '}';
@@ -14,7 +14,7 @@ function main() {
   // if there isn't a filter already, make one
   
   const scriptProperities = PropertiesService.getScriptProperties();
-  let targetFilterId = scriptProperities.getProperty(targetLabel);
+  let targetFilterId = scriptProperities.getProperty(targetLabelName);
   
   makeFilterObject(targetFilterId);
 }
