@@ -18,9 +18,18 @@ function main() {
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
-function getThreads(targetLabel){
-  // 1. loop through all labels?
-  // 2. once you have the target label, getThreads()
+function getThreads(targetLabelName){
+  let targetLabel = GmailApp.getUserLabelByName(targetLabelName);
+  targetLabel =  targetLabel ? targetLabel :GmailApp.createLabel(targetLabelName);
+
+  let targetThreads;
+
+  try {
+    targetThreads = targetLabel.getThreads();
+  }
+  catch(e) {
+    console.log(e);
+  }
   return targetThreads;
 }
 
