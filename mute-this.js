@@ -8,18 +8,12 @@ function main() {
   // Check if there is a filter already, using Properties ( Properties.setProperties(properties))
   // if there isn't a filter already, make one
   makeFilter();
-  
-  // loop through the threads, get the sender.
-  // add each sender to an array, so that you don't repeat work
-  // for each sender in the array, add to the filter
-  editFilter();
-
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
 function getThreads(targetLabelName){
   let targetLabel = GmailApp.getUserLabelByName(targetLabelName);
-  targetLabel =  targetLabel ? targetLabel :GmailApp.createLabel(targetLabelName);
+  targetLabel =  targetLabel ? targetLabel : GmailApp.createLabel(targetLabelName);
 
   let targetThreads = targetLabel.getThreads();
 
