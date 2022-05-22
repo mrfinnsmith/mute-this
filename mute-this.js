@@ -16,7 +16,7 @@ function main() {
   const scriptProperities = PropertiesService.getScriptProperties();
   let targetFilterId = scriptProperities.getProperty('mute-this');
   
-  makeFilter(targetFilterId);
+  makeFilterObject(targetFilterId);
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
@@ -29,7 +29,7 @@ function getThreads(targetLabelName){
   return targetThreads;
 }
 
-function makeFilter() {
+function makeFilterObject() {
   // Make a filter using Gmail.users.settings.filters.create
 }
 
