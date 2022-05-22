@@ -1,8 +1,8 @@
-const muteLabel = 'mute-this' // Change this to whatever label name you want to use.
+const targetLabel = 'mute-this' // Change this to whatever label name you want to use.
 
 // main is the first function to run and calls the other functions.
 function main() {
-  let threads = getThreads();
+  let threads = getThreads(targetLabel);
   
   // Check if there are any threads. if not, return.
 
