@@ -33,11 +33,6 @@ function makeFilter() {
   // Make a filter using Gmail.users.settings.filters.create
 }
 
-function editFilter() {
-  // may need to copy the contents of the filter, then make a new one with the addition of the new sender.
-  // if so, may be better to make a single copy/new/delete with all the senders.
-}
-
 function setProperty() {
   PropertiesService.getScriptProperties().setProperty('filterId', 'ANe1BmhLohezw3s1QGhTYL0AVs2kPAvWQmpnzd--4WNeCoV0pSMwwUsVxwtCCZvMsohbbTXs_Q');
 }
