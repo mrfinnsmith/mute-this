@@ -1,4 +1,4 @@
-const targetLabel = 'mute-this' // Change this to whatever label name you want to use.
+const targetLabel = 'FriscoEdits' // Change this to whatever label name you want to use.
 
 // main is the first function to run and calls the other functions.
 function main() {
@@ -13,7 +13,10 @@ function main() {
   // Check if there is a filter already, using Properties ( Properties.setProperties(properties))
   // if there isn't a filter already, make one
   
-  makeFilter();
+  const scriptProperities = PropertiesService.getScriptProperties();
+  let targetFilterId = scriptProperities.getProperty('mute-this');
+  
+  makeFilter(targetFilterId);
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
