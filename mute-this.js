@@ -14,7 +14,7 @@ function main() {
   // if there isn't a filter already, make one
   
   const scriptProperities = PropertiesService.getScriptProperties();
-  let targetFilterId = scriptProperities.getProperty('mute-this');
+  let targetFilterId = scriptProperities.getProperty(targetLabel);
   
   makeFilterObject(targetFilterId);
 }
