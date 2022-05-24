@@ -1,4 +1,4 @@
-const targetLabelName = 'mute-this' // Change this to whatever label name you want to use.
+const targetLabelName = 'FriscoEdits' // Change this to whatever label name you want to use.
 
 // main is the first function to run and calls the other functions.
 function main() {
@@ -16,7 +16,7 @@ function main() {
     const scriptProperities = PropertiesService.getScriptProperties();
     let targetFilterId = scriptProperities.getProperty(targetLabelName);
 
-    makeFilterObject(targetFilterId);
+    let filterObject = makeFilterObject(targetFilterId);
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
@@ -31,7 +31,12 @@ function getThreads(targetLabelName) {
 
 function makeFilterObject(filterId) {
     // Make a filter using Gmail.users.settings.filters.create
+  let query = '{}';
+  if (filterId != null) query = Gmail.Users.Settings.Filters.get('me', filterId).criteria.query; 
+  filterObject = {
 
+  }
+  return filterObject;
 }
 
 function setProperty() {
