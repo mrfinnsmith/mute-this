@@ -1,4 +1,4 @@
-const targetLabelName = 'FriscoEdits' // Change this to whatever label name you want to use.
+const targetLabelName = 'mute-this' // Change this to whatever label name you want to use.
 
 // main is the first function to run and calls the other functions.
 function main() {
@@ -16,7 +16,10 @@ function main() {
     const scriptProperities = PropertiesService.getScriptProperties();
     let targetFilterId = scriptProperities.getProperty(targetLabelName);
 
-    let filterObject = makeFilterObject(targetFilterId);
+    const newFilterObject = new FilterObject(targetFilterId);
+
+    const newFilter = newFilterObject.makeFilter();
+    
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
@@ -29,15 +32,20 @@ function getThreads(targetLabelName) {
     return targetThreads;
 }
 
-function makeFilterObject(filterId) {
+function FilterObject(filterId) {
     // Make a filter using Gmail.users.settings.filters.create
-  let query = '{}';
-  if (filterId != null) query = Gmail.Users.Settings.Filters.get('me', filterId).criteria.query; 
-  filterObject = {
+    this.query = filterId === null ? '{}' : Gmail.Users.Settings.Filters.get('me', filterId).criteria.query;
+    this.makeFilter = function() {
+      let filter = Gmail.newFilter();
+      filter.criteria = Gmail.newFilterCriteria();
+      filter.criteria.query = this.query;
 
+      filter.action = Gmail.newFilterAction();
+      filter.action.removeLabelIds=['INBOX', 'IMPORTANT', 'UNREAD']
+
+      Gmail.Users.Settings.Filters.create(filter, 'me');
+    }
   }
-  return filterObject;
-}
 
 function setProperty() {
     PropertiesService.getScriptProperties().setProperty('filterId', 'ANe1BmhLohezw3s1QGhTYL0AVs2kPAvWQmpnzd--4WNeCoV0pSMwwUsVxwtCCZvMsohbbTXs_Q');
