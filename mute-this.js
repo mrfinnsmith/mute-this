@@ -5,17 +5,17 @@ function main() {
     let threads = getThreads(targetLabelName);
     if (threads.length == 0) return;
     
-    for (i in threads) {
-        query = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + query;
-    }
-    query = '{' + query.slice(1);
-    
     const scriptProperities = PropertiesService.getScriptProperties();
     let targetFilterId = scriptProperities.getProperty(targetLabelName);
 
     const newFilterObject = new FilterObject(targetFilterId);
 
     const newFilter = newFilterObject.makeFilter();
+        
+    for (i in threads) {
+        query = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + query;
+    }
+    query = '{' + query.slice(1);
 
     if (targetFilterId !== null) scriptProperities.deleteProperty(targetFilterId);
     scriptProperities.setProperty(targetLabelName, newFilter.id);
