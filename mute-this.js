@@ -5,12 +5,12 @@ function main() {
     let threads = getThreads(targetLabelName);
     if (threads.length == 0) return;
     
-    const scriptProperities = PropertiesService.getScriptProperties();
+    let scriptProperities = PropertiesService.getScriptProperties();
     let targetFilterId = scriptProperities.getProperty(targetLabelName);
 
-    const newFilterObject = new FilterObject(targetFilterId);
+    let newFilterObject = new FilterObject(targetFilterId);
 
-    const newFilter = newFilterObject.makeFilter();
+    let newFilter = newFilterObject.makeFilter();
         
     for (i in threads) {
         newFilter.criteria.query = newFilter.criteria.query + ' from:' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1");
