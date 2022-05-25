@@ -59,39 +59,3 @@ function FilterObject(filterId, threads) {
       return Gmail.Users.Settings.Filters.create(filter, 'me');
     }
   }
-
-function setProperty() {
-    PropertiesService.getScriptProperties().setProperty('filterId', 'ANe1BmhLohezw3s1QGhTYL0AVs2kPAvWQmpnzd--4WNeCoV0pSMwwUsVxwtCCZvMsohbbTXs_Q');
-}
-function filtrer() {
-    let filterId = PropertiesService.getScriptProperties().getProperty('filterId');
-    let oldFilter = Gmail.Users.Settings.Filters.get('me', filterId);
-    let oldFilterId = oldFilter.id;
-
-    Gmail.Users.Settings.Filters.remove('me', oldFilterId);
-
-    let newFilter = Gmail.newFilter();
-
-    newFilter.criteria = Gmail.newFilterCriteria();
-    newFilter.criteria.query = oldFilter.criteria.query.replace('}', ' from:mcdonalds}')
-
-    newFilter.action = Gmail.newFilterAction();
-    newFilter.action = oldFilter.action;
-
-    newFilter.id = oldFilterId; // This doesn't work
-
-    let me = Session.getEffectiveUser().getEmail();
-
-    Gmail.Users.Settings.Filters.create(newFilter, me)
-
-    let allFilters = Gmail.Users.Settings.Filters.list('me').filter;
-    for (i in allFilters) {
-        if (typeof allFilters[i].criteria.query !== 'undefined') {
-            if (allFilters[i].criteria.query.includes('buzzfeed')) {
-                console.log(allFilters[i])
-            }
-        }
-    }
-}
-
-function clearit() { ScriptProperties.deleteAllProperties()}
