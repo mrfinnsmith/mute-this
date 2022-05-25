@@ -17,6 +17,7 @@ function main() {
 
     const newFilter = newFilterObject.makeFilter();
 
+    if (targetFilterId !== null) scriptProperities.deleteProperty(targetFilterId);
     scriptProperities.setProperty(targetLabelName, newFilter.id);
 }
 
