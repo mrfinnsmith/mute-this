@@ -4,22 +4,20 @@ const targetLabelName = 'mute-this' // Change this to whatever label name you wa
 function main() {
     let threads = getThreads(targetLabelName);
     if (threads.length == 0) return;
-
-    let query = '}';
+    
     for (i in threads) {
         query = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + query;
     }
     query = '{' + query.slice(1);
-    // Check if there is a filter already, using Properties ( Properties.setProperties(properties))
-    // if there isn't a filter already, make one
-
+    
     const scriptProperities = PropertiesService.getScriptProperties();
     let targetFilterId = scriptProperities.getProperty(targetLabelName);
 
     const newFilterObject = new FilterObject(targetFilterId);
 
     const newFilter = newFilterObject.makeFilter();
-    
+
+    scriptProperities.setProperty(targetLabelName, newFilter.id);
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
