@@ -29,10 +29,6 @@ function getThreads(targetLabelName) {
 
     return targetThreads;
 }
-function makefilters() {
-  let filterId;
-  let filterObject = new FilterObject(filterId);
-}
 
 function FilterObject(filterId, threads) {
     // Make a filter using Gmail.users.settings.filters.create
