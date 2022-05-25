@@ -41,7 +41,7 @@ function FilterObject(filterId) {
       filter.action = Gmail.newFilterAction();
       filter.action.removeLabelIds=['INBOX', 'IMPORTANT', 'UNREAD']
 
-      Gmail.Users.Settings.Filters.create(filter, 'me');
+      return Gmail.Users.Settings.Filters.create(filter, 'me');
     }
   }
 
