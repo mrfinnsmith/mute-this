@@ -8,18 +8,13 @@ function main() {
     let scriptProperities = PropertiesService.getScriptProperties();
     let targetFilterId = scriptProperities.getProperty(targetLabelName);
 
-    let newFilterObject = new FilterObject(targetFilterId);
+    let newFilterObject = new FilterObject(targetFilterId, threads);
 
     let newFilter = newFilterObject.makeFilter();
-        
-    for (i in threads) {
-        newFilter.criteria.query = newFilter.criteria.query + ' from:' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1");
-    }
-    newFilter.criteria.query = newFilter.criteria.query + '}';
 
     if (targetFilterId !== null) {
-      Gmail.Users.Settings.Filters.remove(targetFilterId);
-      scriptProperities.deleteProperty(targetFilterId);
+      Gmail.Users.Settings.Filters.remove('me', targetFilterId);
+      scriptProperities.deleteProperty(targetLabelName);
     }
     scriptProperities.setProperty(targetLabelName, newFilter.id);
 
@@ -34,12 +29,27 @@ function getThreads(targetLabelName) {
 
     return targetThreads;
 }
+function makefilters() {
+  let filterId;
+  let filterObject = new FilterObject(filterId);
+}
 
-function FilterObject(filterId) {
+function FilterObject(filterId, threads) {
     // Make a filter using Gmail.users.settings.filters.create
     this.query = (filterId === null) ? '{' : Gmail.Users.Settings.Filters.get('me', filterId).criteria.query.slice(0, -1),
     this.makeFilter = function() {
+      let targetLabel = GmailApp.getUserLabelByName(targetLabelName); // TODO: refactor to remove duplicate definition in getThreads()
+
       let filter = Gmail.newFilter();
+
+      for (i in threads) {
+        let thisThread = threads[i];
+        this.query = this.query + ' from:' + thisThread.getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1");
+        thisThread.removeLabel(targetLabel);
+      }
+
+      this.query = this.query + '}';
+
       filter.criteria = Gmail.newFilterCriteria();
       filter.criteria.query = this.query;
 
