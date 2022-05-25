@@ -13,9 +13,9 @@ function main() {
     const newFilter = newFilterObject.makeFilter();
         
     for (i in threads) {
-        query = ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1") + query;
+        newFilterObject.query = newFilterObject.query + ' from: ' + threads[i].getMessages()[0].getFrom().replace(/^.+<([^>]+)>$/, "$1");
     }
-    query = '{' + query.slice(1);
+    newFilterObject.query = newFilterObject.query + ' }';
 
     if (targetFilterId !== null) {
       Gmail.Users.Settings.Filters.remove(targetFilterId);
@@ -37,7 +37,7 @@ function getThreads(targetLabelName) {
 
 function FilterObject(filterId) {
     // Make a filter using Gmail.users.settings.filters.create
-    this.query = filterId === null ? '{}' : Gmail.Users.Settings.Filters.get('me', filterId).criteria.query;
+    this.query = filterId === null ? '{' : Gmail.Users.Settings.Filters.get('me', filterId).criteria.query.slice(0, -1);
     this.makeFilter = function() {
       let filter = Gmail.newFilter();
       filter.criteria = Gmail.newFilterCriteria();
