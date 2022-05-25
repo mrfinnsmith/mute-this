@@ -17,8 +17,12 @@ function main() {
     }
     query = '{' + query.slice(1);
 
-    if (targetFilterId !== null) scriptProperities.deleteProperty(targetFilterId);
+    if (targetFilterId !== null) {
+      Gmail.Users.Settings.Filters.remove(targetFilterId);
+      scriptProperities.deleteProperty(targetFilterId);
+    }
     scriptProperities.setProperty(targetLabelName, newFilter.id);
+
 }
 
 // getThreads goes and gets all the email threads that have the target label (set at the top of this script). It returns an array of those threads.
